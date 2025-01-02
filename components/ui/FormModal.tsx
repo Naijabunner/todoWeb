@@ -159,13 +159,14 @@ const FormModal: React.FC<FormModalProps> = ({ openModal, closeModal, type, data
     }
   }
   const btnTitle= type === 'Edit' ? 'Edit' :'Create'
+  const Title= type === 'Edit' ? 'Edit Task' :'Add New Task'
 
   if (!openModal) return null;
 
   return (
     <ModalBackground isOpen={openModal} onClose={closeModal}>
       <div className='shadow-xl rounded-lg scale-95 px-10 pb-10 p-5 w-full bg-slate-50 min-h-[350px] max-w-[700px] mx-5 sm:mx-10 md:mx-auto' onClick={(e) => e.stopPropagation()} >
-        <h2 className='pb-5 sm:text-2xl'>Add New Task
+        <h2 className='pb-5 sm:text-2xl'>{Title}
           <p className=' h-[3px] mt-1  rounded-l-xl w-[20%] bg-primary'></p>
         </h2>
         <form action="" className="w-full">
@@ -189,10 +190,12 @@ const FormModal: React.FC<FormModalProps> = ({ openModal, closeModal, type, data
             label='Submission Date'
             type='date'
             name='submissionDate'
-            value={formData.submissionDate.toISOString().split('T')[0]}
+            value={new Date(formData.submissionDate).toISOString().split('T')[0]}
             onChange={handleChange}
             error={errors['submissionDate']}
           />
+
+          <div className=" md:flex justify-between">
 
           <div className="mt-4 mb-4">
             <label className="block text-sm font-medium text-gray-700">Priority</label>
@@ -218,17 +221,6 @@ const FormModal: React.FC<FormModalProps> = ({ openModal, closeModal, type, data
             </div>
           </div>
          
-        
-
-          <CustomInput
-            label='Description'
-            type='textarea'
-            name='description'
-            value={formData.description}
-            onChange={handleChange}
-            error={errors['textarea']}
-          />
-
           <div className="mt-4 mb-4">
             <label className="block text-sm font-medium text-gray-700">Status</label>
             <div className="mt-2 gap-x-5 flex">
@@ -252,6 +244,18 @@ const FormModal: React.FC<FormModalProps> = ({ openModal, closeModal, type, data
 
             </div>
           </div>
+
+          </div>
+          <CustomInput
+            label='Description'
+            type='textarea'
+            name='description'
+            value={formData.description}
+            onChange={handleChange}
+            error={errors['textarea']}
+          />
+
+
 
           <button
             className='bg-primary  min-w-48 hover:opacity-95 hover:scale-95 focus:scale-95 transition-all ease-in-out font-semibold h-10 rounded-md px-7 float-end text-sm md:text-base text-white'
